@@ -1,0 +1,21 @@
+{
+  "category": "cmd",
+  "description": "命令注入规则 - OWASP A03:2021",
+  "owasp": "A03:2021 Injection",
+  "payloads": [
+    {"id":"cmd-001","subcategory":"basic_linux","payload":"; id","method":"POST","param_name":"ip","param_location":"body","target_module":"cmd","target_vm":"dvwa","description":"分号后执行id命令","owasp":"A03","severity":"CRITICAL","expected_blocked":true,"bypass_indicators":["uid=","root"],"body_template":"ip=127.0.0.1PAYLOAD&Submit=Submit"},
+    {"id":"cmd-002","subcategory":"basic_linux","payload":"| id","method":"POST","param_name":"ip","param_location":"body","target_module":"cmd","target_vm":"dvwa","description":"管道符执行id命令","owasp":"A03","severity":"CRITICAL","expected_blocked":true,"bypass_indicators":["uid=","root"]},
+    {"id":"cmd-003","subcategory":"basic_linux","payload":"&& id","method":"POST","param_name":"ip","param_location":"body","target_module":"cmd","target_vm":"dvwa","description":"AND条件执行id命令","owasp":"A03","severity":"CRITICAL","expected_blocked":true},
+    {"id":"cmd-004","subcategory":"basic_linux","payload":"|| id","method":"POST","param_name":"ip","param_location":"body","target_module":"cmd","target_vm":"dvwa","description":"OR条件执行id命令","owasp":"A03","severity":"CRITICAL","expected_blocked":true},
+    {"id":"cmd-005","subcategory":"basic_linux","payload":"`id`","method":"POST","param_name":"ip","param_location":"body","target_module":"cmd","target_vm":"dvwa","description":"反引号命令替换执行id","owasp":"A03","severity":"CRITICAL","expected_blocked":true},
+    {"id":"cmd-006","subcategory":"basic_linux","payload":"$(id)","method":"POST","param_name":"ip","param_location":"body","target_module":"cmd","target_vm":"dvwa","description":"$()命令替换执行id","owasp":"A03","severity":"CRITICAL","expected_blocked":true},
+    {"id":"cmd-007","subcategory":"read_file","payload":"; cat /etc/passwd","method":"POST","param_name":"ip","param_location":"body","target_module":"cmd","target_vm":"dvwa","description":"读取/etc/passwd","owasp":"A03","severity":"CRITICAL","expected_blocked":true,"bypass_indicators":["root:x:","bin:","daemon:"]},
+    {"id":"cmd-008","subcategory":"read_file","payload":"| cat /etc/shadow","method":"POST","param_name":"ip","param_location":"body","target_module":"cmd","target_vm":"dvwa","description":"读取/etc/shadow","owasp":"A03","severity":"CRITICAL","expected_blocked":true},
+    {"id":"cmd-009","subcategory":"bypass","payload":";i''d","method":"POST","param_name":"ip","param_location":"body","target_module":"cmd","target_vm":"dvwa","description":"单引号分割关键字绕过","owasp":"A03","severity":"CRITICAL","expected_blocked":true,"encodings":["raw"]},
+    {"id":"cmd-010","subcategory":"bypass","payload":";$@id","method":"POST","param_name":"ip","param_location":"body","target_module":"cmd","target_vm":"dvwa","description":"空变量插入绕过","owasp":"A03","severity":"CRITICAL","expected_blocked":true,"encodings":["raw"]},
+    {"id":"cmd-011","subcategory":"bypass","payload":";/bin/i\\d","method":"POST","param_name":"ip","param_location":"body","target_module":"cmd","target_vm":"dvwa","description":"反斜杠分割命令绕过","owasp":"A03","severity":"CRITICAL","expected_blocked":true,"encodings":["raw"]},
+    {"id":"cmd-012","subcategory":"pikachu","payload":"127.0.0.1 | id","method":"POST","param_name":"ipaddress","param_location":"body","target_module":"cmd","target_vm":"pikachu","description":"Pikachu ping命令注入","owasp":"A03","severity":"CRITICAL","expected_blocked":true,"body_template":"ipaddress=PAYLOAD&submit=%E6%8F%90%E4%BA%A4"},
+    {"id":"cmd-013","subcategory":"windows","payload":"& whoami","method":"POST","param_name":"ip","param_location":"body","target_module":"cmd","target_vm":"dvwa","description":"Windows whoami命令","owasp":"A03","severity":"CRITICAL","expected_blocked":true,"bypass_indicators":["SYSTEM","Administrator","desktop-"]},
+    {"id":"cmd-014","subcategory":"windows","payload":"| type C:\\Windows\\System32\\drivers\\etc\\hosts","method":"POST","param_name":"ip","param_location":"body","target_module":"cmd","target_vm":"dvwa","description":"Windows读取hosts文件","owasp":"A03","severity":"CRITICAL","expected_blocked":true,"bypass_indicators":["127.0.0.1","localhost"]}
+  ]
+}

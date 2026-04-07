@@ -1,0 +1,15 @@
+{
+  "category": "ssti",
+  "description": "服务端模板注入规则 - OWASP A03:2021",
+  "owasp": "A03:2021 Injection",
+  "payloads": [
+    {"id":"ssti-001","subcategory":"jinja2","payload":"{{7*7}}","method":"GET","param_name":"name","target_module":"xss_r","target_vm":"dvwa","description":"Jinja2 SSTI数学运算探测","owasp":"A03","severity":"HIGH","expected_blocked":true,"bypass_indicators":["49"]},
+    {"id":"ssti-002","subcategory":"jinja2","payload":"{{config}}","method":"GET","param_name":"name","target_module":"xss_r","target_vm":"dvwa","description":"Jinja2读取config对象","owasp":"A03","severity":"HIGH","expected_blocked":true},
+    {"id":"ssti-003","subcategory":"jinja2_rce","payload":"{{''.__class__.__mro__[1].__subclasses__()[214]('id',shell=True,stdout=-1).communicate()}}","method":"GET","param_name":"name","target_module":"xss_r","target_vm":"dvwa","description":"Jinja2 RCE通过subprocess执行命令","owasp":"A03","severity":"CRITICAL","expected_blocked":true,"bypass_indicators":["uid=","root"]},
+    {"id":"ssti-004","subcategory":"twig","payload":"{{7*'7'}}","method":"GET","param_name":"name","target_module":"xss_r","target_vm":"dvwa","description":"Twig SSTI探测（返回49或7777777区分引擎）","owasp":"A03","severity":"HIGH","expected_blocked":true},
+    {"id":"ssti-005","subcategory":"twig_rce","payload":"{{_self.env.registerUndefinedFilterCallback('system')}}{{_self.env.getFilter('id')}}","method":"GET","param_name":"name","target_module":"xss_r","target_vm":"dvwa","description":"Twig RCE执行system命令","owasp":"A03","severity":"CRITICAL","expected_blocked":true},
+    {"id":"ssti-006","subcategory":"freemarker","payload":"<#assign ex=\"freemarker.template.utility.Execute\"?new()>${ex(\"id\")}","method":"GET","param_name":"name","target_module":"xss_r","target_vm":"dvwa","description":"FreeMarker模板注入RCE","owasp":"A03","severity":"CRITICAL","expected_blocked":true},
+    {"id":"ssti-007","subcategory":"velocity","payload":"#set($x='')##$x.class.forName('java.lang.Runtime').getMethod('exec',''.class).invoke($x.class.forName('java.lang.Runtime').getMethod('getRuntime').invoke(null),'id')","method":"GET","param_name":"name","target_module":"xss_r","target_vm":"dvwa","description":"Velocity Java模板注入RCE","owasp":"A03","severity":"CRITICAL","expected_blocked":true},
+    {"id":"ssti-008","subcategory":"api","payload":"{{7*7}}","method":"GET","param_name":"q","target_module":"search","target_vm":"api_vm","description":"API接口SSTI探测","owasp":"A03","severity":"HIGH","expected_blocked":true,"bypass_indicators":["49"]}
+  ]
+}

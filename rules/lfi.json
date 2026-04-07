@@ -1,0 +1,17 @@
+{
+  "category": "lfi",
+  "description": "本地文件包含/路径遍历规则 - OWASP A05:2021",
+  "owasp": "A05:2021 Security Misconfiguration",
+  "payloads": [
+    {"id":"lfi-001","subcategory":"basic","payload":"../../../etc/passwd","method":"GET","param_name":"page","target_module":"lfi","target_vm":"dvwa","description":"基础路径遍历读取passwd","owasp":"A05","severity":"CRITICAL","expected_blocked":true,"bypass_indicators":["root:x:","daemon:","bin:"]},
+    {"id":"lfi-002","subcategory":"basic","payload":"../../../../etc/shadow","method":"GET","param_name":"page","target_module":"lfi","target_vm":"dvwa","description":"读取/etc/shadow密码文件","owasp":"A05","severity":"CRITICAL","expected_blocked":true},
+    {"id":"lfi-003","subcategory":"basic","payload":"../../../etc/hosts","method":"GET","param_name":"page","target_module":"lfi","target_vm":"dvwa","description":"读取hosts文件","owasp":"A05","severity":"MEDIUM","expected_blocked":true,"bypass_indicators":["127.0.0.1","localhost"]},
+    {"id":"lfi-004","subcategory":"php_wrapper","payload":"php://filter/convert.base64-encode/resource=index.php","method":"GET","param_name":"page","target_module":"lfi","target_vm":"dvwa","description":"PHP filter伪协议读取源码","owasp":"A05","severity":"CRITICAL","expected_blocked":true},
+    {"id":"lfi-005","subcategory":"php_wrapper","payload":"php://input","method":"POST","param_name":"page","target_module":"lfi","target_vm":"dvwa","description":"php://input执行POST中的PHP代码","owasp":"A05","severity":"CRITICAL","expected_blocked":true},
+    {"id":"lfi-006","subcategory":"php_wrapper","payload":"data://text/plain;base64,PD9waHAgc3lzdGVtKCdpZCcpOz8+","method":"GET","param_name":"page","target_module":"lfi","target_vm":"dvwa","description":"data://伪协议执行PHP代码(<?php system('id');?>)","owasp":"A05","severity":"CRITICAL","expected_blocked":true,"bypass_indicators":["uid=","root"]},
+    {"id":"lfi-007","subcategory":"bypass_encoding","payload":"..%2F..%2F..%2Fetc%2Fpasswd","method":"GET","param_name":"page","target_module":"lfi","target_vm":"dvwa","description":"URL编码路径遍历","owasp":"A05","severity":"CRITICAL","expected_blocked":true,"encodings":["raw"]},
+    {"id":"lfi-008","subcategory":"bypass_encoding","payload":"..%252F..%252F..%252Fetc%252Fpasswd","method":"GET","param_name":"page","target_module":"lfi","target_vm":"dvwa","description":"双重URL编码路径遍历","owasp":"A05","severity":"CRITICAL","expected_blocked":true,"encodings":["raw"]},
+    {"id":"lfi-009","subcategory":"bypass_null","payload":"../../../etc/passwd%00.jpg","method":"GET","param_name":"page","target_module":"lfi","target_vm":"dvwa","description":"空字节截断扩展名","owasp":"A05","severity":"CRITICAL","expected_blocked":true,"encodings":["raw"]},
+    {"id":"lfi-010","subcategory":"pikachu","payload":"../../../etc/passwd","method":"GET","param_name":"filename","target_module":"lfi","target_vm":"pikachu","description":"Pikachu LFI路径遍历","owasp":"A05","severity":"CRITICAL","expected_blocked":true}
+  ]
+}

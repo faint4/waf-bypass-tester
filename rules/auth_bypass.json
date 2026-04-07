@@ -1,0 +1,15 @@
+{
+  "category": "auth_bypass",
+  "description": "认证绕过规则 - OWASP A01/A07:2021",
+  "owasp": "A07:2021 Identification and Authentication Failures",
+  "payloads": [
+    {"id":"auth-001","subcategory":"sqli_login","payload":"admin'--","method":"POST","param_name":"username","param_location":"body","target_module":"auth","target_vm":"dvwa","description":"SQL注入绕过登录","owasp":"A07","severity":"CRITICAL","expected_blocked":true,"body_template":"username=PAYLOAD&password=anything&Login=Login","bypass_indicators":["Welcome","Logout","admin"]},
+    {"id":"auth-002","subcategory":"sqli_login","payload":"' OR '1'='1'--","method":"POST","param_name":"username","param_location":"body","target_module":"auth","target_vm":"dvwa","description":"OR 1=1登录绕过","owasp":"A07","severity":"CRITICAL","expected_blocked":true},
+    {"id":"auth-003","subcategory":"default_cred","payload":"admin:admin","method":"POST","param_name":"username","param_location":"body","target_module":"auth","target_vm":"dvwa","description":"默认凭证admin/admin","owasp":"A07","severity":"HIGH","expected_blocked":false,"false_positive":false},
+    {"id":"auth-004","subcategory":"jwt_none","payload":"eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ1c2VyIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4ifQ.","method":"GET","param_name":"token","param_location":"header","target_module":"auth","target_vm":"api_vm","description":"JWT alg=none绕过签名验证","owasp":"A07","severity":"CRITICAL","expected_blocked":true,"extra_headers":{"Authorization":"Bearer PAYLOAD"},"encodings":["raw"]},
+    {"id":"auth-005","subcategory":"brute_force","payload":"password123","method":"POST","param_name":"password","param_location":"body","target_module":"auth","target_vm":"dvwa","description":"暴力破解常见密码","owasp":"A07","severity":"MEDIUM","expected_blocked":false},
+    {"id":"auth-006","subcategory":"idor","payload":"../../admin/profile","method":"GET","param_name":"file","target_module":"idor","target_vm":"pikachu","description":"IDOR越权访问admin文件","owasp":"A01","severity":"HIGH","expected_blocked":true},
+    {"id":"auth-007","subcategory":"cookie_manipulation","payload":"admin","method":"GET","param_name":"role","param_location":"cookie","target_module":"default","target_vm":"webserver","description":"Cookie中role改为admin","owasp":"A01","severity":"HIGH","expected_blocked":true,"extra_cookies":{"role":"PAYLOAD","isAdmin":"true"},"encodings":["raw"]},
+    {"id":"auth-008","subcategory":"http_method","payload":"","method":"TRACE","param_name":"","target_module":"default","target_vm":"webserver","description":"TRACE方法探测XST","owasp":"A07","severity":"MEDIUM","expected_blocked":true,"encodings":["raw"]}
+  ]
+}

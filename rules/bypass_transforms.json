@@ -1,0 +1,105 @@
+{
+  "category": "bypass_transforms",
+  "description": "全局编码/变形规则配置，可组合应用到所有Payload",
+  "transforms": {
+    "url_encode": {
+      "id": "url",
+      "name": "标准URL编码",
+      "description": "对特殊字符进行%XX编码"
+    },
+    "double_url_encode": {
+      "id": "double_url",
+      "name": "双重URL编码",
+      "description": "两次URL编码，%27 → %2527，成功率72%",
+      "reference": "payloadplayground.com 2025"
+    },
+    "html_entity_dec": {
+      "id": "html_dec",
+      "name": "HTML十进制实体",
+      "description": "A → &#65;，干扰WAF正则匹配",
+      "reference": "PayloadsAllTheThings Cloudflare bypass"
+    },
+    "html_entity_hex": {
+      "id": "html_hex",
+      "name": "HTML十六进制实体",
+      "description": "A → &#x41;",
+      "reference": "PayloadsAllTheThings"
+    },
+    "unicode_escape": {
+      "id": "unicode_escape",
+      "name": "Unicode转义",
+      "description": "A → \\u0041，成功率61%",
+      "reference": "payloadplayground.com 2025"
+    },
+    "sql_comment": {
+      "id": "sql_comment",
+      "name": "SQL注释插入",
+      "description": "SELECT → SE/**/LECT，成功率55%",
+      "reference": "payloadplayground.com 2025"
+    },
+    "sql_case": {
+      "id": "sql_case",
+      "name": "SQL关键字大小写混合",
+      "description": "SELECT → SeLeCt，成功率45%",
+      "reference": "payloadplayground.com 2025"
+    },
+    "sql_whitespace_tab": {
+      "id": "url_tab",
+      "name": "Tab替换空格",
+      "description": "空格 → %09，成功率49%",
+      "reference": "payloadplayground.com 2025"
+    },
+    "sql_whitespace_newline": {
+      "id": "url_newline",
+      "name": "换行替换空格",
+      "description": "空格 → %0a",
+      "reference": "payloadplayground.com 2025"
+    },
+    "null_byte": {
+      "id": "null_byte",
+      "name": "空字节注入",
+      "description": "插入%00截断WAF解析，成功率38%",
+      "reference": "payloadplayground.com 2025"
+    },
+    "chunked_transfer": {
+      "id": "chunked",
+      "name": "分块传输编码",
+      "description": "Transfer-Encoding: chunked，将请求体分块发送，成功率83%",
+      "reference": "payloadplayground.com 2025"
+    }
+  },
+  "category_defaults": {
+    "sqli": ["raw","url","double_url","sql_comment","sql_case","url_tab","url_newline","sql_hex_str","sql_null"],
+    "xss":  ["raw","url","double_url","html_dec","html_hex","html_mixed","unicode_escape","xss_case_event","xss_svg","xss_details","xss_template"],
+    "cmd":  ["raw","url","double_url","url_tab","url_newline","null_byte","url_all"],
+    "ssrf": ["raw","url","double_url"],
+    "lfi":  ["raw","url","double_url","url_all","null_byte"],
+    "path_traversal": ["raw","url","double_url","url_all"],
+    "upload": ["raw"],
+    "auth_bypass": ["raw","url","double_url"],
+    "nosql": ["raw","url"],
+    "ssti":  ["raw","url","double_url"],
+    "cve":   ["raw"],
+    "default": ["raw","url","double_url"]
+  },
+  "special_techniques": {
+    "chunked_transfer": {
+      "description": "HTTP分块传输绕过（83%成功率）",
+      "implementation": "将POST body分为3字节一块发送",
+      "reference": "payloadplayground.com 2025",
+      "apply_to": ["sqli","xss","cmd"]
+    },
+    "http_parameter_pollution": {
+      "description": "HTTP参数污染（同名参数多次传值）",
+      "implementation": "id=innocent&id=PAYLOAD",
+      "reference": "payloadplayground.com 2025",
+      "apply_to": ["sqli","xss"]
+    },
+    "oversized_body": {
+      "description": "超大数据包绕过（64KB垃圾数据+Payload放末尾）",
+      "implementation": "许多WAF只检测前几KB",
+      "reference": "腾讯云WAF绕过实战 2022",
+      "apply_to": ["sqli","xss","cmd"]
+    }
+  }
+}

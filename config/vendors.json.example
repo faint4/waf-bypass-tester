@@ -1,0 +1,74 @@
+{
+  "vendors": [
+    {
+      "id": "sangfor",
+      "name": "深信服WAF",
+      "short_name": "深信服",
+      "color": "#1a73e8",
+      "proxy": {
+        "enabled": true,
+        "host": "WAF_PROXY_IP",
+        "port": 8080,
+        "type": "http",
+        "comment": "流量经过深信服WAF串联链路"
+      },
+      "block_codes": [403, 406, 412, 444, 451],
+      "block_keywords": [
+        "深信服", "SangFor", "WAF拦截", "非法请求", "已被拦截",
+        "Access Denied", "Blocked", "Security Alert", "attack detected"
+      ],
+      "allow_codes": [200, 201, 301, 302, 304],
+      "timeout": 15,
+      "enabled": true,
+      "notes": "串联透明桥模式，默认拦截状态码403"
+    },
+    {
+      "id": "chaitin",
+      "name": "长亭雷池WAF",
+      "short_name": "长亭",
+      "color": "#34a853",
+      "proxy": {
+        "enabled": true,
+        "host": "WAF_PROXY_IP",
+        "port": 8080,
+        "type": "http",
+        "comment": "流量经过长亭WAF串联链路"
+      },
+      "block_codes": [403, 406, 444],
+      "block_keywords": [
+        "长亭", "Chaitin", "雷池", "SafeLine", "请求被拒绝",
+        "Access Denied", "Blocked by SafeLine", "安全拦截"
+      ],
+      "allow_codes": [200, 201, 301, 302, 304],
+      "timeout": 15,
+      "enabled": true,
+      "notes": "长亭雷池WAF，默认拦截状态码403"
+    },
+    {
+      "id": "nsfocus",
+      "name": "绿盟WAF",
+      "short_name": "绿盟",
+      "color": "#ea4335",
+      "proxy": {
+        "enabled": true,
+        "host": "WAF_PROXY_IP",
+        "port": 8080,
+        "type": "http",
+        "comment": "流量经过绿盟WAF串联链路"
+      },
+      "block_codes": [403, 406, 444, 460],
+      "block_keywords": [
+        "绿盟", "NSFOCUS", "NGSOC", "已阻断", "被拦截",
+        "Access Denied", "Blocked", "Security Warning"
+      ],
+      "allow_codes": [200, 201, 301, 302, 304],
+      "timeout": 15,
+      "enabled": true,
+      "notes": "绿盟WAF，默认拦截状态码403"
+    }
+  ],
+  "direct_mode": {
+    "comment": "直连模式（绕过WAF，用于建立基线），不走代理",
+    "proxy": null
+  }
+}

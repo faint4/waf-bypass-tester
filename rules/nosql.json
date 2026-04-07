@@ -1,0 +1,15 @@
+{
+  "category": "nosql",
+  "description": "NoSQL注入规则 - OWASP A03:2021",
+  "owasp": "A03:2021 Injection",
+  "payloads": [
+    {"id":"nosql-001","subcategory":"mongodb","payload":"{\"$gt\":\"\"}","method":"POST","param_name":"username","param_location":"body","target_module":"auth","target_vm":"api_vm","description":"MongoDB $gt操作符认证绕过","owasp":"A03","severity":"CRITICAL","expected_blocked":true,"extra_headers":{"Content-Type":"application/json"}},
+    {"id":"nosql-002","subcategory":"mongodb","payload":"{\"$ne\":null}","method":"POST","param_name":"password","param_location":"body","target_module":"auth","target_vm":"api_vm","description":"MongoDB $ne操作符密码绕过","owasp":"A03","severity":"CRITICAL","expected_blocked":true},
+    {"id":"nosql-003","subcategory":"mongodb","payload":"{\"$regex\":\".*\"}","method":"POST","param_name":"username","param_location":"body","target_module":"auth","target_vm":"api_vm","description":"MongoDB $regex通配符注入","owasp":"A03","severity":"HIGH","expected_blocked":true},
+    {"id":"nosql-004","subcategory":"mongodb_url","payload":"username[$gt]=&password[$gt]=","method":"POST","param_name":"username","param_location":"body","target_module":"auth","target_vm":"api_vm","description":"MongoDB URL参数注入","owasp":"A03","severity":"CRITICAL","expected_blocked":true},
+    {"id":"nosql-005","subcategory":"redis","payload":"\\r\\nSET x '<?php system($_GET[\"cmd\"]);?>'\\r\\n","method":"POST","param_name":"query","param_location":"body","target_module":"exec","target_vm":"api_vm","description":"Redis命令注入写WebShell","owasp":"A03","severity":"CRITICAL","expected_blocked":true},
+    {"id":"nosql-006","subcategory":"js_injection","payload":"';return 'a'=='a' && ''=='","method":"GET","param_name":"q","target_module":"search","target_vm":"api_vm","description":"MongoDB服务端JS注入","owasp":"A03","severity":"HIGH","expected_blocked":true},
+    {"id":"nosql-007","subcategory":"sleep","payload":"{\"$where\":\"sleep(5000)\"}","method":"POST","param_name":"filter","param_location":"body","target_module":"search","target_vm":"api_vm","description":"MongoDB $where时间盲注","owasp":"A03","severity":"HIGH","expected_blocked":true},
+    {"id":"nosql-008","subcategory":"graphql","payload":"{\"query\":\"{ __schema { types { name } } }\"}","method":"POST","param_name":"data","param_location":"body","target_module":"exec","target_vm":"api_vm","description":"GraphQL内省查询","owasp":"A03","severity":"MEDIUM","expected_blocked":false,"false_positive":false}
+  ]
+}

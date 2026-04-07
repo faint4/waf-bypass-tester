@@ -1,0 +1,17 @@
+{
+  "category": "path_traversal",
+  "description": "路径遍历规则 - OWASP A05:2021",
+  "owasp": "A05:2021 Security Misconfiguration",
+  "payloads": [
+    {"id":"pt-001","subcategory":"basic","payload":"../../../../etc/passwd","method":"GET","param_name":"file","target_module":"download","target_vm":"file_vm","description":"基础路径遍历","owasp":"A05","severity":"CRITICAL","expected_blocked":true,"bypass_indicators":["root:x:"]},
+    {"id":"pt-002","subcategory":"windows","payload":"..\\..\\..\\Windows\\System32\\drivers\\etc\\hosts","method":"GET","param_name":"file","target_module":"download","target_vm":"file_vm","description":"Windows反斜杠路径遍历","owasp":"A05","severity":"HIGH","expected_blocked":true},
+    {"id":"pt-003","subcategory":"bypass_double_dot","payload":"....//....//....//etc/passwd","method":"GET","param_name":"file","target_module":"download","target_vm":"file_vm","description":"双点双斜杠绕过","owasp":"A05","severity":"CRITICAL","expected_blocked":true,"encodings":["raw"]},
+    {"id":"pt-004","subcategory":"bypass_url","payload":"%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd","method":"GET","param_name":"file","target_module":"download","target_vm":"file_vm","description":"URL编码路径遍历","owasp":"A05","severity":"CRITICAL","expected_blocked":true,"encodings":["raw"]},
+    {"id":"pt-005","subcategory":"bypass_double_url","payload":"%252e%252e%252f%252e%252e%252f%252e%252e%252fetc%252fpasswd","method":"GET","param_name":"file","target_module":"download","target_vm":"file_vm","description":"双重URL编码路径遍历（72%成功率）","owasp":"A05","severity":"CRITICAL","expected_blocked":true,"encodings":["raw"]},
+    {"id":"pt-006","subcategory":"bypass_utf8","payload":"%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/etc/passwd","method":"GET","param_name":"file","target_module":"download","target_vm":"file_vm","description":"非法UTF-8编码路径遍历","owasp":"A05","severity":"CRITICAL","expected_blocked":true,"encodings":["raw"]},
+    {"id":"pt-007","subcategory":"bypass_mixed","payload":"..%2F..%2F..%2Fetc/passwd","method":"GET","param_name":"file","target_module":"download","target_vm":"file_vm","description":"混合编码路径遍历","owasp":"A05","severity":"CRITICAL","expected_blocked":true,"encodings":["raw"]},
+    {"id":"pt-008","subcategory":"windows_encoded","payload":"..%5c..%5c..%5cwindows%5csystem32%5cdrivers%5cetc%5chosts","method":"GET","param_name":"file","target_module":"download","target_vm":"file_vm","description":"Windows路径URL编码","owasp":"A05","severity":"HIGH","expected_blocked":true,"encodings":["raw"]},
+    {"id":"pt-009","subcategory":"webserver","payload":"/../../../etc/passwd","method":"GET","param_name":"path","target_module":"path_traversal","target_vm":"webserver","description":"Web服务器路径遍历","owasp":"A05","severity":"CRITICAL","expected_blocked":true},
+    {"id":"pt-010","subcategory":"null_byte","payload":"../../../../etc/passwd%00","method":"GET","param_name":"file","target_module":"download","target_vm":"file_vm","description":"空字节截断路径遍历","owasp":"A05","severity":"CRITICAL","expected_blocked":true,"encodings":["raw"]}
+  ]
+}

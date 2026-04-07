@@ -1,0 +1,83 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+.eggs/
+*.manifest
+*.spec
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs and results (contain sensitive data / large files)
+logs/
+results/
+*.log
+*.db
+
+# Reports
+reports/
+*.html
+
+# Local config overrides (keep example files, ignore actual config with real IPs)
+config/vendors.json
+config/targets.json
+
+# Mock/test data
+*_mock_*
+*_test_*
+verify_*
+
+# Secrets and credentials
+*.pem
+*.key
+*.crt
+secrets/
+.env
+.env.local
+
+# Coverage
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 本地验证/调试脚本
+verify_level1.py
+check_*.py
+test_*.py
+
+# Mock 相关（本地测试用，不入库）
+mock_waf_server.py
+config/*_mock.json
+config/*_mock.yaml
+
+# Level2 测试时产生的配置备份目录
+.config_backup/

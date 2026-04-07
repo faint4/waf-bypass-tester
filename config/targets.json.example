@@ -1,0 +1,112 @@
+{
+  "targets": [
+    {
+      "id": "dvwa",
+      "name": "DVWA靶场",
+      "host": "TARGET_HOST_IP",
+      "port": 80,
+      "protocol": "http",
+      "description": "Damn Vulnerable Web Application",
+      "modules": {
+        "sqli":        "/vulnerabilities/sqli/?id=PAYLOAD&Submit=Submit",
+        "sqli_blind":  "/vulnerabilities/sqli_blind/?id=PAYLOAD&Submit=Submit",
+        "xss_r":       "/vulnerabilities/xss_r/?name=PAYLOAD",
+        "xss_s":       "/vulnerabilities/xss_s/",
+        "xss_d":       "/vulnerabilities/xss_d/?default=PAYLOAD",
+        "cmd":         "/vulnerabilities/exec/",
+        "lfi":         "/vulnerabilities/fi/?page=PAYLOAD",
+        "upload":      "/vulnerabilities/upload/",
+        "csrf":        "/vulnerabilities/csrf/",
+        "auth":        "/login.php"
+      },
+      "login": {
+        "url": "/login.php",
+        "method": "POST",
+        "data": "username=USERNAME&password=PASSWORD&Login=Login",
+        "cookie_name": "PHPSESSID"
+      },
+      "enabled": true
+    },
+    {
+      "id": "pikachu",
+      "name": "Pikachu靶场",
+      "host": "TARGET_HOST_IP",
+      "port": 80,
+      "protocol": "http",
+      "description": "Pikachu漏洞练习平台",
+      "modules": {
+        "sqli_num":    "/vul/sqli/sqli_num.php?id=PAYLOAD&submit=%E6%9F%A5%E8%AF%A2",
+        "sqli_str":    "/vul/sqli/sqli_str.php?name=PAYLOAD&submit=%E6%9F%A5%E8%AF%A2",
+        "xss_r":       "/vul/xss/xss_reflected_get.php?message=PAYLOAD&submit=submit",
+        "xss_s":       "/vul/xss/xss_stored.php",
+        "cmd":         "/vul/rce/rce_ping.php",
+        "ssrf_curl":   "/vul/ssrf/ssrf_curl.php?url=PAYLOAD",
+        "ssrf_file":   "/vul/ssrf/ssrf_fgc.php?file=PAYLOAD",
+        "lfi":         "/vul/fileinclude/fi_local.php?filename=PAYLOAD&submit=%E6%8F%90%E4%BA%A4",
+        "upload":      "/vul/fileupload/",
+        "auth":        "/vul/burteforce/bf_form.php",
+        "xxe":         "/vul/xxe/xxe_1.php",
+        "idor":        "/vul/insecure_dir_obj/idor_1.php?file=PAYLOAD"
+      },
+      "enabled": true
+    },
+    {
+      "id": "webserver",
+      "name": "Web服务器VM",
+      "host": "TARGET_HOST_IP",
+      "port": 80,
+      "protocol": "http",
+      "description": "通用Web服务器（Apache/Nginx）",
+      "modules": {
+        "default":     "/",
+        "path_traversal": "/PAYLOAD",
+        "headers":     "/api/v1/data"
+      },
+      "enabled": true
+    },
+    {
+      "id": "https_vm",
+      "name": "HTTPS服务VM",
+      "host": "TARGET_HOST_IP",
+      "port": 443,
+      "protocol": "https",
+      "description": "HTTPS服务虚机",
+      "modules": {
+        "default":     "/",
+        "api":         "/api/"
+      },
+      "enabled": true
+    },
+    {
+      "id": "api_vm",
+      "name": "API服务VM",
+      "host": "TARGET_HOST_IP",
+      "port": 8080,
+      "protocol": "http",
+      "description": "REST API服务虚机",
+      "modules": {
+        "user":        "/api/user?id=PAYLOAD",
+        "search":      "/api/search?q=PAYLOAD",
+        "exec":        "/api/exec",
+        "ssrf":        "/api/fetch?url=PAYLOAD",
+        "upload":      "/api/upload",
+        "auth":        "/api/login"
+      },
+      "enabled": true
+    },
+    {
+      "id": "file_vm",
+      "name": "文件服务VM",
+      "host": "TARGET_HOST_IP",
+      "port": 80,
+      "protocol": "http",
+      "description": "文件服务虚机（FTP/HTTP文件服务）",
+      "modules": {
+        "download":    "/download?file=PAYLOAD",
+        "view":        "/view?path=PAYLOAD",
+        "upload":      "/upload"
+      },
+      "enabled": true
+    }
+  ]
+}
