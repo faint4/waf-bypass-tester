@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-04-09
+
+### Added
+
+- **Level 2 Mock 模式** (`run_level2.py`)
+  - 无需真实 WAF 设备，本地 Mock 服务器全流程演练
+  - 自动备份/恢复 `config/*.json`，测试完成后还原现场
+  - 一键完成：启动 Mock → 清库 → 测试 → 生成报告 → 停止服务
+
+### Fixed
+
+- **报告雷达图显示错误**：`attack_type` 映射从英文全名改为数据库实际存储的短名（`sqli` / `xss` / `cmd` 等），修复了雷达图全为 0 的问题
+- **报告雷达图维度过多**：改为只渲染有实测数据的维度，避免无数据分类以全零轮廓填充图表
+- **模板渲染冲突**：将 `str.format()` 改为逐字符串替换，彻底解决 CSS/JS 花括号与 Python format 语法冲突
+
+### Changed
+
+- **绕过详情展示**：从平铺列表改为「厂商 + 攻击类型」分组折叠，默认展开第一组，其余折叠，大幅提升大量绕过记录时的可读性
+- **`.gitignore` 更新**：新增 `check_*.py`、`test_*.py`、`mock_waf_server.py`、`config/*_mock.json`、`.config_backup/` 规则
+- **文档规范**：`attack_type` 字段统一使用短名，README 补充 Level 2 Mock 模式使用说明
+
+---
+
 ## [1.0.0] - 2026-04-07
 
 ### Added
